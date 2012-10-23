@@ -43,9 +43,15 @@ var autoFillData = function (){
 
      
 };
+<<<<<<< HEAD
 		
 		$("#editPage").on("click", editItem)
 			
+=======
+
+		$("#editPage").on("click", editItem)
+
+>>>>>>> 0a21cc419524211cf1a4eaf3a25e04f6ddc9b8b9
 		function editItem() {
         //Grab the data from our item from local storage.
         var value = localStorage.getItem(this.key);
@@ -205,8 +211,13 @@ var getImage = function(catName, makeOtherList) {
 
     };
 
+<<<<<<< HEAD
 
 
+=======
+
+
+>>>>>>> 0a21cc419524211cf1a4eaf3a25e04f6ddc9b8b9
 
 
 
@@ -226,6 +237,7 @@ var getImage = function(catName, makeOtherList) {
 };
 
 console.log(localStorage.length);
+<<<<<<< HEAD
     
     
  
@@ -240,3 +252,12 @@ console.log(localStorage.length);
 
 
 
+=======
+    
+    
+ 
+    
+    
+    
+});
+>>>>>>> 0a21cc419524211cf1a4eaf3a25e04f6ddc9b8b9
