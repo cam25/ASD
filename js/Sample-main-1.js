@@ -43,8 +43,10 @@ var autoFillData = function (){
 
      
 };
-
-var editItem = function() {
+		
+		$("#editPage").on("click", editItem)
+			
+		function editItem() {
         //Grab the data from our item from local storage.
         var value = localStorage.getItem(this.key);
         var item = jQuery.parseJSON(value);
@@ -77,42 +79,13 @@ var editItem = function() {
 
 
     };
-
-function makeItemLinks(key, linksLi) {
-        //add edit single item link
-        var editLink = $(linksLi).append('<a href="#">Edit Event</a>');
-        editLink.key = key;
-        editLink.on("click", editItem);
-
-        //add line break
-        var breakTag = $("<br>");
-        linksLi.append(breakTag);
-
-
-        //delete link
-        var deleteLink = $(linksLi).append('<a href="#">Delete Event</a>');
-        deleteLink.key = key;
-        $("#deleteLink").on("click", deleteItem);
-       
-
-    };
-
-
-
-var getData = function(){
-        
-        if(localStorage.length === 0) {
-            alert("There is no data inside Local Storage so default data was added.");
-            autoFillData();
-            
-        }
+    
+    $("#displayStoredData").on("click",function getData() {
 
         //write Data from Local Storage to the browser.
-        var makeDiv = $("#display");
-        makeDiv.attr("#items");
+        
         var makeList = $("<ul>");
-        makeDiv.append(makeList);
-        $("#displayPage").append(makeDiv);
+        $("#displayPage").append(makeList);
         for (var i = 0, len = localStorage.length; i < len; i++) {
             var makeLi = $("<li></li>");
             var linksLi = $("<li></li>");
@@ -134,9 +107,33 @@ var getData = function(){
             makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
         }
         
-};
+});
+
+function makeItemLinks(key, linksLi) {
+        //add edit single item link
+        var editLink = $('<a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b">Edit Event</a>');
+        editLink.key = key;
+        linksLi.append(editLink)
+
+        //add line break
+        var breakTag = $("<br>");
+        linksLi.append(breakTag);
 
 
+        //delete link
+        var deleteLink = $('<a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b">Delete Event</a>');
+        deleteLink.key = key;
+       
+        linksLi.append(deleteLink);
+       
+
+    };
+
+
+
+    
+
+ $("#saveEvent").on("click", validate);
 
     var storeData = function(key){
     if (!key) {
@@ -211,9 +208,9 @@ var getImage = function(catName, makeOtherList) {
 
 
 
-                    
-var clearLocal = function(){
-
+    $("clearStoredData").on("click", clearLocal) 
+              
+    function  clearLocal() {
     if (localStorage.length === 0) {
             alert("There is no data to clear.");
         } else {
@@ -229,12 +226,9 @@ var clearLocal = function(){
 console.log(localStorage.length);
     
     
-    var displayLink = $("#displayStoredData");
-      displayLink.on("click", getData);
-    var clearLink = $("#clearStoredData");
-    clearLink.on("click", clearLocal);
-    var saveLink = $("#saveEvent");
-    saveLink.on("click", validate);
+ 
+    
+    
     
 });
 
