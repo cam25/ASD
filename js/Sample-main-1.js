@@ -227,7 +227,6 @@ var getImage = function(catName, makeOtherList) {
 };
 
 console.log(localStorage.length);
-<<<<<<< HEAD
     
     
  
@@ -236,18 +235,6 @@ console.log(localStorage.length);
     
 });
 
-
-
-
-
-
-
-=======
-    
-    
- 
     
     
     
-});
->>>>>>> 0a21cc419524211cf1a4eaf3a25e04f6ddc9b8b9
