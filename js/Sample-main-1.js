@@ -23,6 +23,11 @@ $('#addItem2').on('pageinit', function(){
 	
 	};
 	
+	$("#displayPage").on("pageinit", function (){
+		
+		
+	});
+	
 	//any other code needed for addItem page goes here
 
 
@@ -31,7 +36,93 @@ $('#addItem2').on('pageinit', function(){
 
 
 
-var storeData = function(key){
+var autoFillData = function (){
+        //The actual JSON object data required for this to work is coming from our json.js file. which is loaded from our addItem.html file.
+        //Store the JSON OBJECT in local storage.
+        for (var n in JSON) {
+            var id = Math.floor(Math.random() * 1000000001);
+            localStorage.setItem(id, JSON.stringify(JSON[n]));
+            
+
+        }
+
+	 
+};
+
+function makeItemLinks(key, linksLi) {
+        //add edit single item link
+        var editLink = $(linksLi).append('<a href="#">Edit Event</a>');
+        editLink.key = key;
+        $("editLink").on("click", editLink);
+        
+
+    
+
+        //delete link
+        var deleteLink = $(linksLi).append('<a href="#">Delete Event</a>');
+        deleteLink.key = key;
+        $("deleteLink").on("click", deleteLink);
+       
+
+    };
+    
+    var getImage = function(catName, makeOtherList) {
+        var imageLi = $("<li>");
+        makeOtherList.append(imageLi);
+        var newImage = $("<img>");
+        var setSource = newImage.attr("src", "images/" + catName + ".png");
+        imageLi.append(newImage);
+
+    };
+    
+    
+
+
+
+var getData = function(){
+		
+		if(localStorage.length === 0) {
+			alert("There is no data inside Local Storage so default data was added.");
+            autoFillData();
+			
+		}
+
+        //write Data from Local Storage to the browser.
+        var makeDiv = $("#display");
+        makeDiv.attr("#items");
+        var makeList = $("<ul></ul>");
+        makeDiv.append(makeList);
+        $("#displayPage").append(makeDiv);
+        for (var i = 0, len = localStorage.length; i < len; i++) {
+            var makeLi = $("<li></li>");
+            var linksLi = $("<li></li>");
+            makeList.append(makeLi);
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            //convert string from local storage value to an object by using json.Parse
+            var item = JSON.parse(localStorage.getItem(key));
+            console.log(item);
+            var makeOtherList = $("<li></li>");
+            makeLi.append(makeOtherList);
+            getImage(item.group[1], makeOtherList);
+            console.log(item.group[1]);
+         for (var tag in item) {
+             $('<p>' + item[tag][0] + item[tag][1] + '</p>').appendTo(makeLi);
+                
+            }
+           
+            makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
+        }
+        
+        
+};
+
+
+
+
+
+
+    var storeData = function(key){
 	if (!key) {
 
 
@@ -65,18 +156,6 @@ var storeData = function(key){
         localStorage.setItem(id, JSON.stringify(item));
         alert("Contact Saved");
 	
-};
-
-var autoFillData = function (){
-        //The actual JSON object data required for this to work is coming from our json.js file. which is loaded from our addItem.html file.
-        //Store the JSON OBJECT in local storage.
-        for (var n in JSON) {
-            var id = Math.floor(Math.random() * 1000000001);
-            localStorage.setItem(id, JSON.stringify(JSON[n]));
-
-        }
-
-	 
 };
 
 
@@ -130,81 +209,15 @@ var editItem = function() {
 };
 
 
-function makeItemLinks(key, linksLi) {
-        //add edit single item link
-        var editLink = $("<a>");
-        editLink.href = "#";
-        editLink.key = key;
-        var editText = "Edit Event";
-        editLink.on("click", function() {
-	        editItem(editLink.key);
-        });
-        editLink.html = editText;
-        linksLi.append(editLink);
-
-        //add line break
-        var breakTag = $("<br>");
-        linksLi.append(breakTag);
-
-
-        //delete link
-        var deleteLink = $("<a>");
-        deleteLink.href = "#";
-        deleteLink.key = key;
-        var deleteText = "Delete Event";
-        deleteLink.on("click", deleteItem);
-        deleteLink.html = deleteText;
-        linksLi.append(deleteLink);
-
-    }
 
 
 
-var getImage = function(catName, makeOtherList) {
-        var imageLi = $("<li>");
-        makeOtherList.append(imageLi);
-        var newImage = $("<img>");
-        var setSource = newImage.attr("src", "images/" + catName + ".png");
-        imageLi.append(newImage);
-
-    };
-
-var getData = function(){
 
 
-  
-        //write Data from Local Storage to the browser.
-        var makeDiv = $("#display");
-        makeDiv.attr("#items");
-        var makeList = $("<ul>");
-        makeDiv.append(makeList);
-        $("#displayPage").append(makeDiv);
-        for (var i = 0, len = localStorage.length; i < len; i++) {
-            var makeLi = $("<li></li>");
-            var linksLi = $("<li></li>");
-            makeList.append(makeLi);
-            var key = localStorage.key(i);
-            var value = localStorage.getItem(key);
-            //convert string from local storage value to an object by using json.Parse
-            var item = JSON.parse(localStorage.getItem(key));
-            console.log(item);
-            var makeOtherList = $("<li></li>");
-            makeLi.append(makeOtherList);
-            getImage(item.group[1], makeOtherList);
-            console.log(item.group[1]);
-            for (var tag in item) {
-                var makeOtherLi = $("<li></li>");
-                makeOtherList.append(makeOtherLi);
-                var optSubText = item[tag][0] + " " + item[tag][1];
-                makeOtherLi.html = optSubText;
-                makeOtherList.append(linksLi);
-                
-            }
-           
-            makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
-        }
 
-};
+
+
+
 
 
 					
@@ -225,8 +238,8 @@ var clearLocal = function(){
 console.log(localStorage.length);
 	
 	
-var displayLink = $("#displayStoredData");
-    displayLink.on("click", getData);
+	var displayLink = $("#displayStoredData");
+  	displayLink.on("click", getData);
     var clearLink = $("#clearStoredData");
     clearLink.on("click", clearLocal);
     var saveLink = $("#saveEvent");
