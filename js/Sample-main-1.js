@@ -86,6 +86,8 @@ var autoFillData = function (){
         
         var makeList = $("<ul>");
         $("#displayPage").append(makeList);
+        $(makeList).empty();
+        console.log(makeList);
         for (var i = 0, len = localStorage.length; i < len; i++) {
             var makeLi = $("<li></li>");
             var linksLi = $("<li></li>");
