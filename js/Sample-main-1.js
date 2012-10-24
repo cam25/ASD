@@ -3,7 +3,8 @@ $('#Home').on('pageinit', function(){
     
     
     
-});    
+});  
+
         
 $('#addItem2').on('pageinit', function(){
         
@@ -22,6 +23,76 @@ $('#addItem2').on('pageinit', function(){
     
     
     };
+   
+    $("#saveEvent").on("click", function(){
+    validate()
+     $.mobile.changePage("#displayPage");
+     var makeList = $("<ul>");
+     $("#displayPage").append(makeList);
+        console.log(makeList);
+        for (var i = 0, len = localStorage.length; i < len; i++) {
+            var makeLi = $("<li></li>");
+            var linksLi = $("<li></li>");
+            makeList.append(makeLi);
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            //convert string from local storage value to an object by using json.Parse
+            var item = JSON.parse(localStorage.getItem(key));
+            console.log(item);
+            var makeOtherList = $("<li></li>");
+            makeLi.append(makeOtherList);
+            getImage(item.group[1], makeOtherList);
+            console.log(item.group[1]);
+         for (var tag in item) {
+             $('<p>' + item[tag][0] + item[tag][1] + '</p>').appendTo(makeLi);
+            }
+           
+            makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
+        }
+     
+     
+     
+    });
+    var storeData = function(key){
+    if (!key) {
+
+
+            var id = Math.floor(Math.random() * 1000000001);
+        } else {
+            //Set the id to the existing key we're editting so that it will save the data.
+            //The key is the same key that's been passed along from the editSubmit eventhanbdler.
+            //to the validate function, then passed here, into the storeData 
+             id = key;
+
+        }
+        //Gather up all our form field values and store in an object.
+        //Object properties contain array with the form label and input values
+        var item = {};
+        item.group = ["Event:", $("#select-choice-1").val()];
+        item.firstName = ["FirstName:", $("#firstName").val()];
+        item.lastName = ["LastName:", $("#lastName").val()];
+        item.address = ["address:", $("#address").val()];
+        item.city = ["City:", $("#city").val()];
+        item.state = ["State:", $("#state").val()];
+        item.phoneNumber = ["PhoneNumber:", $("#phoneNumber").val()];
+        item.email = ["Email:", $("#email").val()];
+        //item.timeEVent = ["TimeOfEvent:", $("timeOfEvent").value];
+        item.date = ["mydate:", $("#mydate").val()];
+        item.textBox = ["TextBox:", $("#textBox").val()];
+        item.iq = ["Range:", $("#range").val()];
+        //item.checkBox = ["CheckBox:", gE("checkbox").value];
+
+
+        //save data to local storage: Use Stringify to convert our object to a string.
+        localStorage.setItem(id, JSON.stringify(item));
+        alert("Contact Saved");
+    
+};
+    
+    
+    
+    
+    
     
     //any other code needed for addItem page goes here
 
@@ -82,38 +153,21 @@ var autoFillData = function (){
 
     };
     
-    $("#displayStoredData").on("click",function getData() {
+    var    deleteItem = function (){
 
-        //write Data from Local Storage to the browser.
-        
-        var makeList = $("<ul>");
-        $("#displayPage").append(makeList);
-        $(makeList).empty();
-        console.log(makeList);
-        for (var i = 0, len = localStorage.length; i < len; i++) {
-            var makeLi = $("<li></li>");
-            var linksLi = $("<li></li>");
-            makeList.append(makeLi);
-            var key = localStorage.key(i);
-            var value = localStorage.getItem(key);
-            //convert string from local storage value to an object by using json.Parse
-            var item = JSON.parse(localStorage.getItem(key));
-            console.log(item);
-            var makeOtherList = $("<li></li>");
-            makeLi.append(makeOtherList);
-            getImage(item.group[1], makeOtherList);
-            console.log(item.group[1]);
-         for (var tag in item) {
-             $('<p>' + item[tag][0] + item[tag][1] + '</p>').appendTo(makeLi);
-                
-            }
-           
-            makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
+    var ask = confirm("Are you sure you want to delete this event?");
+        if (ask) {
+            localStorage.removeItem(this.key);
+            window.location.reload();
+        } else {
+            alert("Event was NOT removed");
+
         }
-        
-});
 
-function makeItemLinks(key, linksLi) {
+            
+};
+
+	function makeItemLinks(key, linksLi) {
         //add edit single item link
         var editLink = $('<a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b">Edit Event</a>');
         editLink.key = key;
@@ -132,73 +186,8 @@ function makeItemLinks(key, linksLi) {
        
 
     };
-
-
-
     
-
- $("#saveEvent").on("click", validate);
-
-    var storeData = function(key){
-    if (!key) {
-
-
-            var id = Math.floor(Math.random() * 1000000001);
-        } else {
-            //Set the id to the existing key we're editting so that it will save the data.
-            //The key is the same key that's been passed along from the editSubmit eventhanbdler.
-            //to the validate function, then passed here, into the storeData 
-             id = key;
-
-        }
-        //Gather up all our form field values and store in an object.
-        //Object properties contain array with the form label and input values
-        var item = {};
-        item.group = ["Event:", $("#select-choice-1").val()];
-        item.firstName = ["FirstName:", $("#firstName").val()];
-        item.lastName = ["LastName:", $("#lastName").val()];
-        item.address = ["address:", $("#address").val()];
-        item.city = ["City:", $("#city").val()];
-        item.state = ["State:", $("#state").val()];
-        item.phoneNumber = ["PhoneNumber:", $("#phoneNumber").val()];
-        item.email = ["Email:", $("#email").val()];
-        //item.timeEVent = ["TimeOfEvent:", $("timeOfEvent").value];
-        item.date = ["mydate:", $("#mydate").val()];
-        item.textBox = ["TextBox:", $("#textBox").val()];
-        item.iq = ["Range:", $("#range").val()];
-        //item.checkBox = ["CheckBox:", gE("checkbox").value];
-
-
-        //save data to local storage: Use Stringify to convert our object to a string.
-        localStorage.setItem(id, JSON.stringify(item));
-        alert("Contact Saved");
-    
-};
-
-
-
-
-    
-    var    deleteItem = function (){
-
-    var ask = confirm("Are you sure you want to delete this event?");
-        if (ask) {
-            localStorage.removeItem(this.key);
-            window.location.reload();
-        } else {
-            alert("Event was NOT removed");
-
-        }
-
-            
-};
-
-
-
-
-
-
-var getImage = function(catName, makeOtherList) {
+    var getImage = function(catName, makeOtherList) {
         var imageLi = $("<li>");
         makeOtherList.append(imageLi);
         var newImage = $("<img>");
@@ -206,15 +195,47 @@ var getImage = function(catName, makeOtherList) {
         imageLi.append(newImage);
 
     };
+    
+    
+    $("#displayStoredData").on("click",function getData() {
+    
+	    autoFillData();
+        //write Data from Local Storage to the browser.
+        var makeList = $("<ul>");
+        $("#displayPage").append(makeList);
+        console.log(makeList);
+        
+        for (var i = 0, len = localStorage.length; i < len; i++) {
+        
+            var makeLi = $("<li></li>");
+            var linksLi = $("<li></li>");
+            makeList.append(makeLi);
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            //convert string from local storage value to an object by using json.Parse
+            var item = JSON.parse(localStorage.getItem(key));
+            console.log(item);
+            var makeOtherList = $("<li></li>");
+            makeLi.append(makeOtherList);
+            getImage(item.group[1], makeOtherList);
+            console.log(item.group[1]);
+            ;
+         for (var tag in item) {
+             $('<p>' + item[tag][0] + item[tag][1] + '</p>').appendTo(makeLi);
+             
+                
+            }
+            
+            makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
+        }
+        
+});
 
+ 
 
-
-
-
-    $("clearStoredData").on("click", clearLocal) 
-              
-    function  clearLocal() {
-    if (localStorage.length === 0) {
+$("#clearStoredData").on("click", clearLocal)
+function clearLocal() {
+        if (localStorage.length === 0) {
             alert("There is no data to clear.");
         } else {
             localStorage.clear();
@@ -222,16 +243,11 @@ var getImage = function(catName, makeOtherList) {
             window.location.reload();
             return false;
         }
-            
+    }
 
-};
 
-console.log(localStorage.length);
-    
-    
+
  
-    
-    
     
 });
 
