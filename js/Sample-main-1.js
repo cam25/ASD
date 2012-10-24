@@ -23,12 +23,55 @@ $('#addItem2').on('pageinit', function(){
     
     
     };
+    
+    $("#displayPage").on("pageinit", function() {
+    
+    $("#displayStoredData").on("click",function getData() {
+    
+        //write Data from Local Storage to the browser.
+        var makeList = $("<ul>");
+        
+        $("#displayPage").append(makeList);
+        console.log(makeList);
+        
+        for (var i = 0, len = localStorage.length; i < len; i++) {
+        
+            var makeLi = $("<li></li>");
+            var linksLi = $("<li></li>");
+            makeList.append(makeLi);
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            //convert string from local storage value to an object by using json.Parse
+            var item = JSON.parse(localStorage.getItem(key));
+            var makeOtherList = $("<li></li>");
+            makeLi.append(makeOtherList);
+            getImage(item.group[1], makeOtherList);
+         for (var tag in item) {
+             $('<p>' + item[tag][0] + item[tag][1] + '</p>').appendTo(makeLi);
+             
+                
+            }
+            
+            makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
+        }
+        
+});
+	    
+	    
+    });
    
-    $("#saveEvent").on("click", function(){
-    validate()
+    $("#saveEvent").on("click",  function(){
      $.mobile.changePage("#displayPage");
-     var makeList = $("<ul>");
-     $("#displayPage").append(makeList);
+     
+     validate()
+     
+    
+     
+     
+         var makeList = $("<ul>");
+     $("#display").append(makeList);
+    
+     
         console.log(makeList);
         for (var i = 0, len = localStorage.length; i < len; i++) {
             var makeLi = $("<li></li>");
@@ -45,6 +88,7 @@ $('#addItem2').on('pageinit', function(){
             console.log(item.group[1]);
          for (var tag in item) {
              $('<p>' + item[tag][0] + item[tag][1] + '</p>').appendTo(makeLi);
+             
             }
            
             makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
@@ -169,20 +213,20 @@ var autoFillData = function (){
 
 	function makeItemLinks(key, linksLi) {
         //add edit single item link
-        var editLink = $('<a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b">Edit Event</a>');
+        var editLink = $('<a href="#">Edit Event</a>');
         editLink.key = key;
-        linksLi.append(editLink)
+        editLink.append(linksLi).appendTo("#display");
 
         //add line break
         var breakTag = $("<br>");
-        linksLi.append(breakTag);
+        linksLi.append(breakTag).appendTo("#display");
 
 
         //delete link
-        var deleteLink = $('<a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b">Delete Event</a>');
+        var deleteLink = $('<a href="#">Delete Event</a>');
         deleteLink.key = key;
+        deleteLink.append(linksLi).appendTo("#display");
        
-        linksLi.append(deleteLink);
        
 
     };
@@ -197,39 +241,7 @@ var autoFillData = function (){
     };
     
     
-    $("#displayStoredData").on("click",function getData() {
     
-	    autoFillData();
-        //write Data from Local Storage to the browser.
-        var makeList = $("<ul>");
-        $("#displayPage").append(makeList);
-        console.log(makeList);
-        
-        for (var i = 0, len = localStorage.length; i < len; i++) {
-        
-            var makeLi = $("<li></li>");
-            var linksLi = $("<li></li>");
-            makeList.append(makeLi);
-            var key = localStorage.key(i);
-            var value = localStorage.getItem(key);
-            //convert string from local storage value to an object by using json.Parse
-            var item = JSON.parse(localStorage.getItem(key));
-            console.log(item);
-            var makeOtherList = $("<li></li>");
-            makeLi.append(makeOtherList);
-            getImage(item.group[1], makeOtherList);
-            console.log(item.group[1]);
-            ;
-         for (var tag in item) {
-             $('<p>' + item[tag][0] + item[tag][1] + '</p>').appendTo(makeLi);
-             
-                
-            }
-            
-            makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
-        }
-        
-});
 
  
 
