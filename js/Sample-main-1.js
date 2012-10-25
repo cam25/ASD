@@ -16,25 +16,97 @@ $('#addItem2').on('pageinit', function(){
             submitHandler: function() {
         var data = evForm.serializeArray();
             storeData(this.key);
+            dataLoop()
             console.log(localStorage);
             
         }
     });
     
     
-    };
     
     $("#displayPage").on("pageinit", function() {
     
     $("#displayStoredData").on("click",function getData() {
+    		
+    		dataLoop();
+    
     
         //write Data from Local Storage to the browser.
-        var makeList = $("<ul>");
-        
-        $("#displayPage").append(makeList);
-        console.log(makeList);
-        
-        for (var i = 0, len = localStorage.length; i < len; i++) {
+//        var makeList = $("<ul>");
+//        
+//        $("#displayPage").append(makeList);
+//        console.log(makeList);
+//        
+//        for (var i = 0, len = localStorage.length; i < len; i++) {
+//        
+//            var makeLi = $("<li></li>");
+//            var linksLi = $("<li></li>");
+//            makeList.append(makeLi);
+//            var key = localStorage.key(i);
+//            var value = localStorage.getItem(key);
+//            //convert string from local storage value to an object by using json.Parse
+//            var item = JSON.parse(localStorage.getItem(key));
+//            var makeOtherList = $("<li></li>");
+//            makeLi.append(makeOtherList);
+//            getImage(item.group[1], makeOtherList);
+//         for (var tag in item) {
+//             $('<p>' + item[tag][0] + item[tag][1] + '</p>').appendTo(makeLi);
+//             
+//                
+//            }
+//            
+//            makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
+//        }
+//        
+});
+	    
+	    
+    });
+   
+    $("#saveEvent").on("click",  function(){
+     $.mobile.changePage("#displayPage");
+     
+     validate()
+     
+    dataLoop()
+     
+     
+//         var makeList = $("<ul>");
+//     $("#display").append(makeList);
+//    
+//     
+//        console.log(makeList);
+//        for (var i = 0, len = localStorage.length; i < len; i++) {
+//            var makeLi = $("<li></li>");
+//            var linksLi = $("<li></li>");
+//            makeList.append(makeLi);
+//            var key = localStorage.key(i);
+//            var value = localStorage.getItem(key);
+//            //convert string from local storage value to an object by using json.Parse
+//            var item = JSON.parse(localStorage.getItem(key));
+//            console.log(item);
+//            var makeOtherList = $("<li></li>");
+//            makeLi.append(makeOtherList);
+//            getImage(item.group[1], makeOtherList);
+//            console.log(item.group[1]);
+//         for (var tag in item) {
+//             $('<p>' + item[tag][0] + item[tag][1] + '</p>').appendTo(makeLi);
+//             
+//            }
+//           
+//            makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
+//        }
+     
+     
+     
+    });
+    
+    var dataLoop = function() {
+    
+     var makeList = $("<ul>");
+     $("#displayPage").append(makeList);
+    
+    for (var i = 0, len = localStorage.length; i < len; i++) {
         
             var makeLi = $("<li></li>");
             var linksLi = $("<li></li>");
@@ -54,49 +126,12 @@ $('#addItem2').on('pageinit', function(){
             
             makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
         }
-        
-});
 	    
 	    
-    });
-   
-    $("#saveEvent").on("click",  function(){
-     $.mobile.changePage("#displayPage");
-     
-     validate()
-     
+    }
     
-     
-     
-         var makeList = $("<ul>");
-     $("#display").append(makeList);
     
-     
-        console.log(makeList);
-        for (var i = 0, len = localStorage.length; i < len; i++) {
-            var makeLi = $("<li></li>");
-            var linksLi = $("<li></li>");
-            makeList.append(makeLi);
-            var key = localStorage.key(i);
-            var value = localStorage.getItem(key);
-            //convert string from local storage value to an object by using json.Parse
-            var item = JSON.parse(localStorage.getItem(key));
-            console.log(item);
-            var makeOtherList = $("<li></li>");
-            makeLi.append(makeOtherList);
-            getImage(item.group[1], makeOtherList);
-            console.log(item.group[1]);
-         for (var tag in item) {
-             $('<p>' + item[tag][0] + item[tag][1] + '</p>').appendTo(makeLi);
-             
-            }
-           
-            makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
-        }
-     
-     
-     
-    });
+    };
     var storeData = function(key){
     if (!key) {
 
