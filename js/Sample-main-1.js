@@ -16,11 +16,12 @@ $('#addItem2').on('pageinit', function(){
             submitHandler: function() {
         var data = evForm.serializeArray();
             storeData(this.key);
+            dataLoop()
             console.log(localStorage);
             
         }
     });
-    
+    };
     
     
     $("#displayPage").on("pageinit", function() {
@@ -101,7 +102,9 @@ $('#addItem2').on('pageinit', function(){
     });
     
     var dataLoop = function() {
-
+    
+     
+     
     
     for (var i = 0, len = localStorage.length; i < len; i++) {
         
@@ -114,7 +117,6 @@ $('#addItem2').on('pageinit', function(){
             var makeOtherList = $("<li></li>");
             makeLi.append(makeOtherList);
             getImage(item.group[1], makeOtherList);
-            makeOtherList.append(makeLi);
          for (var tag in item) {
              $('<p>' + item[tag][0] + item[tag][1] + '</p>').appendTo(makeLi);
              
@@ -125,7 +127,7 @@ $('#addItem2').on('pageinit', function(){
         }
 	    
 	    
-    }
+    };
     
     
     
@@ -292,7 +294,7 @@ function clearLocal() {
 
 
  
-};    
+    
 });
 
     
