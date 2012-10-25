@@ -120,6 +120,7 @@ $('#addItem2').on('pageinit', function(){
             var makeOtherList = $("<li></li>");
             makeLi.append(makeOtherList);
             getImage(item.group[1], makeOtherList);
+            $('<p>').html($('<a>').attr({'href': '#','onclick': 'deleteItem(' + key + ');'}).html('Delete Event')).appendTo('#display');
          for (var tag in item) {
              $('<p>' + item[tag][0] + item[tag][1] + '</p>').appendTo(makeLi);
              
