@@ -104,12 +104,15 @@ $('#addItem2').on('pageinit', function(){
     var dataLoop = function() {
     
      
+     var makeList = $("<ul>");
+     $("#display").append(makeList)
      
     
     for (var i = 0, len = localStorage.length; i < len; i++) {
         
             var makeLi = $("<li></li>");
             var linksLi = $("<li></li>");
+            makeList.append(makeLi);
             var key = localStorage.key(i);
             var value = localStorage.getItem(key);
             //convert string from local storage value to an object by using json.Parse
@@ -123,7 +126,7 @@ $('#addItem2').on('pageinit', function(){
                 
             }
             
-            makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
+            //makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
         }
 	    
 	    
