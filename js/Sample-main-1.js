@@ -103,14 +103,14 @@ $('#addItem2').on('pageinit', function(){
     
     var dataLoop = function() {
     
-     var makeList = $("<ul>");
+     
      $("#displayPage").append(makeList);
     
     for (var i = 0, len = localStorage.length; i < len; i++) {
         
             var makeLi = $("<li></li>");
             var linksLi = $("<li></li>");
-            makeList.append(makeLi);
+            $("#display").append(makeLi);
             var key = localStorage.key(i);
             var value = localStorage.getItem(key);
             //convert string from local storage value to an object by using json.Parse
