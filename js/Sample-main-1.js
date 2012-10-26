@@ -127,10 +127,13 @@ $('#addItem2').on('pageinit', function () {
         $.mobile.changePage("#addItem2");
  
         //remove the initial listener from the input "save contact"       
-        $("#saveEvent").off("click");
+        //$("#saveEvent").off("click");
         //change submit button value to edit button
-        $("saveEvent").val("Edit Contact");
+        $("#saveEvent").val("Edit Contact");
         var editSubmit = $("#saveEvent");
+        editSubmit.on("click", storeData);
+        
+        
         
         //save the key value established in this function as a property of the edit Submit event
         //editSubmit.addEventListener("click", validate);
@@ -215,9 +218,6 @@ $('#addItem2').on('pageinit', function () {
  
     };
  
- 
- 
-    $("#editPage").on("click", editItem);
  
 
     var deleteItem = function () {
