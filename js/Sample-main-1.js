@@ -31,6 +31,7 @@ $('#addItem2').on('pageinit', function () {
  
     };
     
+    
     var storeData = function (key) {
         if (!key) {
  
@@ -127,11 +128,14 @@ $('#addItem2').on('pageinit', function () {
         $.mobile.changePage("#addItem2");
  
         //remove the initial listener from the input "save contact"       
-        //$("#saveEvent").off("click");
+        $("#saveEvent").off("click");
         //change submit button value to edit button
-        $("#saveEvent").val("Edit Contact");
+        
         var editSubmit = $("#saveEvent");
+        $("#saveEvent").val("Edit Contact");
+        
         editSubmit.on("click", storeData);
+        location.reload();
         
         
         
@@ -143,12 +147,34 @@ $('#addItem2').on('pageinit', function () {
  
     };
     
+    var autoFillData = function () {
+        //The actual JSON object data required for this to work is coming from our json.js file. which is loaded from our addItem.html file.
+        //Store the JSON OBJECT in local storage.
+        for (var n in json) {
+            var id = Math.floor((Math.random() + 1) * 10000000);
+            localStorage.setItem(id, JSON.stringify(json[n]));
+ 
+ 
+        }
+ 
+ 
+    };
+    
     
     
     //show data
     var dataLoop = function () {
+    
+    if (localStorage.length === 0)
+        {
+            alert("No data stored. Dummy data will be inserted.");
+            autoFillData();
+        }
  
 	var makeList = $("#display");
+	$("#display").show();
+	
+	
 
  
         for (var i = 0, l = localStorage.length; i < l; i++)
@@ -183,9 +209,9 @@ $('#addItem2').on('pageinit', function () {
     
     
     //display button action
-    $("#displayStoredData").on("click", function () {
- 
-        dataLoop();
+    $("#displayStoredData").on("click", function() {
+    
+         dataLoop();
         
  
  
@@ -204,35 +230,22 @@ $('#addItem2').on('pageinit', function () {
  
     }); //end submit
 
- 
-    var autoFillData = function () {
-        //The actual JSON object data required for this to work is coming from our json.js file. which is loaded from our addItem.html file.
-        //Store the JSON OBJECT in local storage.
-        for (var n in JSON) {
-            var id = Math.floor(Math.random() * 1000000001);
-            localStorage.setItem(id, JSON.stringify(JSON[n]));
- 
- 
+    function deleteItem()
+    {
+        var toDelete = confirm("Are you sure you want to remove this event?");
+        if (toDelete)
+        {
+            var key = $(this).attr('key');
+            alert("Event was deleted.");
+            localStorage.removeItem(key);
+            $("#display").html("");
+            $.mobile.changePage("#home");
         }
- 
- 
-    };
- 
- 
-
-    var deleteItem = function () {
- 
-        var ask = confirm("Are you sure you want to delete this event?");
-        if (ask) {
-            localStorage.removeItem(this.key);
-            window.location.reload();
-        } else {
-            alert("Event was NOT removed");
- 
+        else
+        {
+            alert("Event was not remove.");
         }
- 
- 
-    };
+    }
  
     
     $("#clearStoredData").on("click", clearLocal);
