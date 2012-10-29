@@ -21,7 +21,7 @@
 		<firstName>Carl</firstName>
 		<lastName>Thompson</lastName>
 		<address>1710 Baltimore Ave</address>
-		<city>Laurel</publisher>
+		<city>Laurel</city>
 		<state>Maryland</state>
 		<phoneNumber>301-555-5555</phoneNumber>
 		<email>email@email.com</email>
@@ -36,7 +36,7 @@
 		<firstName>Tom</firstName>
 		<lastName>Jones</lastName>
 		<address>1330 St Paul St</address>
-		<city>Salisbury</publisher>
+		<city>Salisbury</city>
 		<state>Maryland</state>
 		<phoneNumber>410-222-5555</phoneNumber>
 		<email>email@email.com</email>
@@ -51,7 +51,7 @@
 		<firstName>Clarence</firstName>
 		<lastName>Stewart</lastName>
 		<address>222 Perl St</address>
-		<city>Bowie</publisher>
+		<city>Bowie</city>
 		<state>Maryland</state>
 		<phoneNumber>301-111-5555</phoneNumber>
 		<email>email@bowie.com</email>
@@ -66,7 +66,7 @@
 		<firstName>Wallace</firstName>
 		<lastName>Padd</lastName>
 		<address>213 Clover St</address>
-		<city>New Carollton</publisher>
+		<city>New Carollton</city>
 		<state>Maryland</state>
 		<phoneNumber>301-433-5555</phoneNumber>
 		<email>email@NewCarrol.com</email>
