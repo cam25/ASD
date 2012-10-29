@@ -430,6 +430,7 @@ $('#addItem2').on('pageinit', function () {
 				$("#jsonList").listview('refresh');
 			},
 			error: function(result){
+			console.log(result);
 				console.log(result);
 			}
 		});

@@ -10,7 +10,7 @@
 		"state": "Maryland",
 		"phoneNumber": "410-555-5555",
 		"email": "email@email.com",
-		"timeEVent":["TimeOfEvent:", "12:00PM"],
+		"timeEVent": "12:00PM",
 		"date": "12/24/2012",
 		"textBox": "Text Here",
 		"iq": "6",

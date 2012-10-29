@@ -6,7 +6,7 @@
 		<firstName>John</firstName>
 		<lastName>Smith</lastName>
 		<address>333 West 3rd St</address>
-		<city>Baltimore</publisher>
+		<city>Baltimore</city>
 		<state>Maryland</state>
 		<phoneNumber>410-555-5555</phoneNumber>
 		<email>email@email.com</email>
