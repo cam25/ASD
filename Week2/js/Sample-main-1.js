@@ -394,6 +394,97 @@ $('#addItem2').on('pageinit', function () {
  
     });
     
+    //loadJsonData
+    
+    $("#jsonButtn").on("click", function(){
+		console.log("Starting JSON");
+		$("#jsonList").empty();
+		//AJAX call for JSON data
+		$.ajax({
+			url: "xhr/data.json",
+			type: "GET",
+			dataType: "json",
+			success: function(json){
+				alert("JSON data retrieved successfully!");
+				console.log(json);
+				for(var i = 0, j = json.Events.length; i < j; i++){
+                    var jsonEvents = json.Events[i];
+                    console.log(jsonEvents);
+                    console.log(jsonEvents.state);
+                    $('' +
+	                    '<li><p> Event:' + jsonEvents.group + '</p>'+
+	                    '<p> First Name:' + jsonEvents.firstName + '</p>'+
+	                    '<p> Last Name:' + jsonEvents.lastName + '</p>'+
+	                    '<p> Address:' + jsonEvents.address + '</p>'+
+	                    '<p> City' + jsonEvents.city + '</p>'+
+	                    '<p> State:' + jsonEvents.state + '</p>'+
+	                    '<p> Phone Number:' + jsonEvents.phoneNumber + '</p>'+
+	                    '<p> Email:' + jsonEvents.email + '</p>'+
+	                    '<p> Time Of Event:' + jsonEvents.timeEVent + '</p>'+
+	                    '<p> Date:' + jsonEvents.date + '</p>'+
+	                    '<p> Comments:' + jsonEvents.textBox + '</p>'+
+	                    '<p> Priority Meter:' + jsonEvents.iq + '</p></li>'
+	                    
+                    ).appendTo('#jsonList');   
+                }
+				$("#jsonList").listview('refresh');
+			},
+			error: function(result){
+				console.log(result);
+			}
+		});
+	});
+	
+	//load XML
+	$("#xmlButtn").on("click", function(){
+		console.log("Starting XML");
+		$("#xmlContent").empty();
+		//AJAX call for XML data
+		$.ajax({
+			url: "xhr/data.xml",
+			type: "GET",
+			dataType: "xml",
+			success: function(xml, status, data){
+				alert("XML data retrieved successfully!");
+				console.log(status, xml);          
+	            $(xml).find("Event").each(function(){
+	                var group = $(this).find('group').text(),
+	                	firstName = $(this).find('firstName').text(),
+	                	lastName = $(this).find('lastName').text(),
+	                	address = $(this).find('address').text(),
+	                	city = $(this).find('city').text(),
+	                	state = $(this).find('state').text(),
+	                	phoneNumber = $(this).find('phoneNumber').text(),
+	                	email = $(this).find('email').text(),
+	                	timeEVent = $(this).find('timeEVent').text(),
+	                	date = $(this).find('date').text(),
+	                	textBox = $(this).find('textBox').text(),
+	                	iq = $(this).find('iq').text();
+	                	
+	                $('' +
+                        '<li>' + group + '</li>' +
+                        '<li>' + firstName + '</li>' +
+                        '<li>' + lastName + '</li>' +
+                        '<li>' + address + '</li>' +
+                        '<li>' + city + '</li>' + 
+                        '<li>' + state + '</li>' +
+                        '<li>' + phoneNumber + '</li>' +
+                        '<li>' + email + '</li>' +
+                        '<li>' + timeEVent + '</li>'+
+                        '<li>' + date + '</li>'+
+                        '<li>' + textBox + '</li>'+
+                        '<li>' + iq + '</li>'
+	                ).appendTo('#xmlList');
+	            });
+				 $("#xmlContent").listview('refresh');
+			},
+			error: function(status, result){
+				console.log(status, result);
+			}
+		});
+	});
+	
+	
     
     
     

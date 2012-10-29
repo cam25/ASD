@@ -14,7 +14,7 @@ $('#addItem2').on('pageinit', function () {
             invalidHandler: function (form, validator) {},
             submitHandler: function () {
                 var data = evForm.serializeArray();
-                storeData(this.key);
+                storeData(this.key)
                 
                 console.log(localStorage);
  
@@ -66,6 +66,7 @@ $('#addItem2').on('pageinit', function () {
         localStorage.setItem(id, JSON.stringify(item));
         alert("Contact Saved");
         $.mobile.changePage("#displayPage");
+        window.location.reload();
         
  
     };
@@ -135,7 +136,7 @@ $('#addItem2').on('pageinit', function () {
         $("#saveEvent").val("Edit Contact");
         
         editSubmit.on("click", storeData);
-        location.reload();
+        
         
         
         
@@ -172,7 +173,10 @@ $('#addItem2').on('pageinit', function () {
         }
  
 	var makeList = $("#display");
-	$("#display").show();
+	$("#display").empty();
+
+	
+	
 	
 	
 
@@ -203,6 +207,7 @@ $('#addItem2').on('pageinit', function () {
  
             makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
         }
+        
  
  
     };
@@ -212,6 +217,7 @@ $('#addItem2').on('pageinit', function () {
     $("#displayStoredData").on("click", function() {
     	console.log(localStorage);
          dataLoop();
+         
         
  
  
@@ -224,8 +230,10 @@ $('#addItem2').on('pageinit', function () {
     
     $("#saveEvent").on("click", function() {
     validate();
+    $.mobile.changePage("#displayPage");
 
         dataLoop();
+        
  
  
     }); //end submit
@@ -269,7 +277,11 @@ $('#addItem2').on('pageinit', function () {
 
    $("#displayPage").on("pageinit", function () {
 	    	//displayPage code here
-	    	$("#display").empty();
+	    		
+	    	
+	    	
+	    	
+	    	
  
  
  
@@ -393,6 +405,13 @@ $('#addItem2').on('pageinit', function () {
  
  
     });
+    
+    
+    //Data from outside SERVER
+    
+    
+        
+    
     
     
     
