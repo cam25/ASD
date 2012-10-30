@@ -439,7 +439,7 @@ $('#addItem2').on('pageinit', function () {
 	//load XML
 	$("#xmlButtn").on("click", function(){
 		console.log("Starting XML");
-		$("#xmlContent").empty();
+		$("#xmlList").empty();
 		//AJAX call for XML data
 		$.ajax({
 			url: "xhr/data.xml",
@@ -476,8 +476,9 @@ $('#addItem2').on('pageinit', function () {
                         '<li>' + textBox + '</li>'+
                         '<li>' + iq + '</li>'
 	                ).appendTo('#xmlList');
+	                console.log(firstName);
 	            });
-				 $("#xmlContent").listview('refresh');
+				 $("#xmlList").listview('refresh');
 			},
 			error: function(status, result){
 				console.log(status, result);
