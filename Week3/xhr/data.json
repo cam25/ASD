@@ -1,0 +1,89 @@
+{
+
+	"Events" :[
+ {
+		"group":  "Wedding",
+		"firstName": "John",
+		"lastName": "Smith",
+		"address": "333 West 3rd St",
+		"city": "Baltimore",
+		"state": "Maryland",
+		"phoneNumber": "410-555-5555",
+		"email": "email@email.com",
+		"timeEVent": "12:00PM",
+		"date": "12/24/2012",
+		"textBox": "Text Here",
+		"iq": "6",
+		"checkBox": "Monday"
+		
+		
+	},
+	{
+		"group": "Birthday",
+		"firstName": "Carl",
+		"lastName": "Thompson",
+		"address": "1710 Baltimore Ave",
+		"city": "Laurel",
+		"state": "Maryland",
+		"phoneNumber": "301-555-5555",
+		"email": "email@email.com",
+		"timeEVent": "2:00PM",
+		"date": "1/11/2012",
+		"textBox": "Text Here",
+		"iq": "10",
+		"checkBox": "Tuesday"
+		
+		
+	},
+	{
+		"group": "Meeting",
+		"firstName": "Tom",
+		"lastName":  "Jones",
+		"address":  "1330 St Paul St.",
+		"city": "Salisbury",
+		"state": "Maryland",
+		"phoneNumber": "410-222-5555",
+		"email": "email@email.com",
+		"timeEVent": "8:00PM",
+		"date": "09/10/2012",
+		"textBox": "Text Here",
+		"iq": "6",
+		"checkBox": "Saturday"
+		
+		
+	},
+	{
+		"group":  "BabyShower",
+		"firstName": "Clarence",
+		"lastName":  "Stewart",
+		"address":  "222 Pearl St",
+		"city": "Bowie",
+		"state": "Maryland",
+		"phoneNumber": "301-111-5555",
+		"email": "email@bowie.com",
+		"timeEVent": "9:00PM",
+		"date": "06/22/2012",
+		"textBox": "Text Here",
+		"iq": "6",
+		"checkBox": "Monday"
+		
+		
+	},
+	{
+		"group":  "Birthday",
+		"firstName": "Wallace",
+		"lastName":  "Padd",
+		"address":  "213 Clover St.",
+		"city": "New Carrolton",
+		"state": "Maryland",
+		"phoneNumber": "301-433-5555",
+		"email": "email@NewCarrol.com",
+		"timeEVent": "8:30PM",
+		"date": "10/10/2012",
+		"textBox": "Text Here",
+		"iq": "6",
+		"checkBox": "Thursday"
+		
+		
+	}]
+	}
