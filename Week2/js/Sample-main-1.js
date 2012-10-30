@@ -496,25 +496,28 @@ $('#addItem2').on('pageinit', function () {
 			url: "xhr/data.csv",
 			type: "GET",
 			dataType: "text",
-			success: function(status, csv){
+			success: function(csv, status){
 				alert("CSV data retrieved successfully!");
 				console.log(csv, status);
                 var events = [];
                 var splitCSV = csv.split(/\r\n|\n/);
-                var tags = splitCSV[0].split(',');
-                for(var i=0; i<splitCSV.length; i++) {
+                var tags = splitCSV[1].split(',');
+                for(var i=2; i<splitCSV.length; i++) {
                     var event = splitCSV[i].split(',');
                     if (event.length == tags.length) {
                         var eventData = [];
                         for (var j=0; j<tags.length; j++){
-                            eventData.push(event[j]);
+                            eventData.push(tags[j]);
                         }
                         events.push(eventData);
+                        
                     }
                 }
+                
                 for(var k=0; k<events.length; k++){
+                console.log(events.length);
                     var eventCats = events[k];
-                    console.log(events[k]);
+                    console.log(eventCats[1]);
                     $('' +
                     '<div id="csvList">'+
 	                    '<ul>'+
@@ -533,6 +536,7 @@ $('#addItem2').on('pageinit', function () {
 	                    '</ul>' +
                     '</div>'
                     ).appendTo('#csvContent');
+                    console.log(events);
                 }
                  $("#csvList").listview('refresh');
 			},
