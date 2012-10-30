@@ -439,6 +439,7 @@ $('#addItem2').on('pageinit', function () {
 	//load XML
 	$("#xmlButtn").on("click", function(){
 		console.log("Starting XML");
+		
 		$("#xmlList").empty();
 		//AJAX call for XML data
 		$.ajax({
@@ -485,6 +486,63 @@ $('#addItem2').on('pageinit', function () {
 			}
 		});
 	});
+	
+	//CSV Load
+	$("#csvButtn").on("click", function(){
+		console.log("Starting CSV");
+		$("#csvList").empty();
+		//AJAX call for CSV data
+		$.ajax({
+			url: "xhr/data.csv",
+			type: "GET",
+			dataType: "text",
+			success: function(status, csv){
+				alert("CSV data retrieved successfully!");
+				console.log(csv, status);
+                var events = [];
+                var splitCSV = csv.split(/\r\n|\n/);
+                var tags = splitCSV[0].split(',');
+                for(var i=0; i<splitCSV.length; i++) {
+                    var event = splitCSV[i].split(',');
+                    if (event.length == tags.length) {
+                        var eventData = [];
+                        for (var j=0; j<tags.length; j++){
+                            eventData.push(event[j]);
+                        }
+                        events.push(eventData);
+                    }
+                }
+                for(var k=0; k<events.length; k++){
+                    var eventCats = events[k];
+                    console.log(events[k]);
+                    $('' +
+                    '<div id="csvList">'+
+	                    '<ul>'+
+	                        '<li>Event: ' + eventCats[0] + '</li>'+
+	                        '<li>First Name: ' + eventCats[1] + '</li>'+
+	                        '<li>Last Name: ' + eventCats[2] + '</li>'+
+	                        '<li>address: ' + eventCats[3] + '</li>'+
+	                        '<li>city: ' + eventCats[4] + '</li>'+
+	                        '<li>state: ' + eventCats[5] + '</li>'+
+	                        '<li>phone Number: ' + eventCats[6] + '</li>'+
+	                        '<li>email: ' + eventCats[7] + '</li>'+
+	                        '<li>time Of event: ' + eventCats[8] + '</li>' +
+	                        '<li>date: ' + eventCats[9] + '</li>' +
+	                        '<li>text box: ' + eventCats[10] + '</li>' +
+	                        '<li>iq: ' + eventCats[11] + '</li>' +
+	                    '</ul>' +
+                    '</div>'
+                    ).appendTo('#csvContent');
+                }
+                 $("#csvList").listview('refresh');
+			},
+			error: function(status, result){
+				console.log(status, result);
+			}
+		});
+	});
+                
+             
 	
 	
     
