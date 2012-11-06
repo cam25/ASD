@@ -132,7 +132,7 @@ $('#addItem2').on('pageinit', function () {
         //change submit button value to edit button
         
         var editSubmit = $("#saveEvent");
-        $("#saveEvent").val("Edit Contact");
+        $("saveEvent").val("Edit Contact");
         
         editSubmit.on("click", storeData);
         location.reload();
@@ -165,6 +165,7 @@ $('#addItem2').on('pageinit', function () {
     //show data
     var dataLoop = function () {
     
+    
     if (localStorage.length === 0)
         {
             alert("No data stored. Dummy data will be inserted.");
@@ -172,11 +173,8 @@ $('#addItem2').on('pageinit', function () {
         }
  
 	var makeList = $("#display");
-	$("#display").show();
-	
 	
 
- 
         for (var i = 0, l = localStorage.length; i < l; i++)
         {
             var makeLi = $("<li></li>");
@@ -203,7 +201,7 @@ $('#addItem2').on('pageinit', function () {
  
             makeItemLinks(localStorage.key(i), linksLi); // create our edit and delete buttons/links for each item in local storage
         }
- 
+        
  
     };
     
@@ -269,7 +267,8 @@ $('#addItem2').on('pageinit', function () {
 
    $("#displayPage").on("pageinit", function () {
 	    	//displayPage code here
-	    	$("#display").empty();
+	    	
+	    	
  
  
  
