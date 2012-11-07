@@ -135,7 +135,7 @@ $('#addItem2').on('pageinit', function () {
         $("saveEvent").val("Edit Contact");
         
         editSubmit.on("click", storeData);
-        location.reload();
+       
         
         
         
