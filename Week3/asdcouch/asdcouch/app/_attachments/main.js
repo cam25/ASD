@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 		$.ajax({
 			"url": "_view/Events",
@@ -18,7 +19,7 @@ $(document).ready(function() {
 					var iq = Events.value.iq;
 					$("#display").append(
 						$("<li>").append(
-							
+
                         '<li>' + group + '</li>' +
                         '<li>' + firstName + '</li>' +
                         '<li>' + lastName + '</li>' +
