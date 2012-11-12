@@ -1,6 +1,6 @@
 function(doc) {
-  if (doc._id.substr(0, 6) === "Event:") {
-    emit(doc._id,{
+  if (doc.value.group === "birthday") {
+    emit(doc.value,{
     	"group": doc.group,
     	"firstName": doc.firstName,
     	"lastName": doc.lastName,
@@ -20,3 +20,5 @@ function(doc) {
     		
   }
 };
+
+//if (doc.value.group === "birthday") {
