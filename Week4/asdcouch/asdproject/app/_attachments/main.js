@@ -39,7 +39,8 @@ console.log("addItem Page Loaded");
 			item.state		= $('#state').val();
 			item.phoneNumber 			= $('#phoneNumber').val();
 			item.email		= $('#email').val();
-			item.date		= $('#mydate').val();
+			item.date		= $('#date').val();
+			console.log(item.date);
 			item.textBox	= $('#textBox').val();
 			item.range			= $('#range').val();	
 			//Changes id to the correct format in CouchDB
@@ -82,7 +83,7 @@ console.log("DisplayPage Loaded");
 					var state = event.value.state;
 					var phoneNumber = event.value.phoneNumber;
 					var email = event.value.email;
-					var date = event.value.mydate;
+					var date = event.value.date;
 					var textBox = event.value.textBox;
 					var iq = event.value.range;
 				
@@ -122,13 +123,14 @@ var details = urlVars()["Events"];
 
   $.couch.db("asdproject").openDoc(details, {
     success: function(data) {
-    var idValue = data.id
-	var revValue = data.rev
+    var idValue = data._id
+	var revValue = data._rev
 		console.log(idValue);
+		console.log(revValue);
         console.log(data);
         console.log(data.group);
-        console.log(data.mydate);
-        var editDoc = function() {
+        console.log(data.date);
+        var editDoc = function(idValue,revValue) {
         var item 				= {};
 			$('#select-choice-1').val(data.group);
 			$('#firstName').val(data.firstName);
@@ -138,9 +140,9 @@ var details = urlVars()["Events"];
 			$('#state').val(data.state);
 			$('#phoneNumber').val(data.phoneNumber);
 			$('#email').val(data.email);
-			$('#mydate').val(data.date);
+			$('#date').val(data.date);
 			$('#textBox').val(data.textBox);
-			$('#range').val(data.iq);
+			$('#range').val(data.range);
         
         $.mobile.changePage("#addItem2");
  
@@ -152,7 +154,7 @@ var details = urlVars()["Events"];
         $("saveEvent").val("Edit Contact");
 console.log(editSubmit);
         //save the key value established in this function as a property of the edit Submit event
-        editSubmit.on("click", validate);
+        editSubmit.on("click", storeData);
         editSubmit.key = this.key;
  
         };
@@ -166,8 +168,8 @@ console.log(editSubmit);
 	
 	$("#deleteItemLink").on('click', function(){
 				//Remove document by id
-				var idValue = data.id
-				var revValue = data.rev
+				var idValue = data._id
+				var revValue = data._rev
 				$.couch.db("asdproject").removeDoc(idValue,revValue, {
 					success: function(data){
 						console.log(data);
@@ -199,7 +201,7 @@ console.log(details);
                     '<p> State: ' + data.state + '</p>'+
                     '<p> Phone Number: ' + data.phoneNumber + '</p>'+
                     '<p> Email: ' + data.email + '</p>'+
-                    '<p> Date: ' + data.mydate + '</p>'+
+                    '<p> Date: ' + data.date + '</p>'+
                     '<p> TextBox: ' + data.textBox + '</p>'+
                     '<p> Range: ' + data.range + '</p></li>'
 				
