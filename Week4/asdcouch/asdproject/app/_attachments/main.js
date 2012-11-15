@@ -8,6 +8,7 @@ $('#Home').on('pageinit', function () {
 
 $('#addItem2').on('pageinit', function () {
 console.log("addItem Page Loaded");
+
  
     var validate = function () {
         var evForm = $('#eventForm');
@@ -28,7 +29,7 @@ console.log("addItem Page Loaded");
          $.mobile.changePage($('#' + pageID),{transition:'slide'});
 	 }
     
-    var storeData = function(key){	
+    var storeData = function(idValue,revValue){	
 		
 		var item 				= {};
 			item.group		= $('#select-choice-1').val();
@@ -67,6 +68,7 @@ console.log("addItem Page Loaded");
 
 
 $("#displayPage").live("pageshow", function() {
+
 console.log("DisplayPage Loaded");
 	$.couch.db("asdproject").view("app/Events", {
 		success: function(data) {
@@ -99,8 +101,8 @@ console.log("DisplayPage Loaded");
 
 
 
-
 $(document).on("pageshow", "#details", function() {
+
 
 var urlVars = function() {
 		var urlData = $($.mobile.activePage).data("url");
@@ -119,10 +121,76 @@ var urlVars = function() {
 	}
 	
 var details = urlVars()["Events"];
+console.log(details);
+	$.couch.db("asdproject").openDoc(details, {
+    success: function(data) {
+    	
+    		$('' +
+            		'<li><p> Event: ' + data.group + '</p>'+
+            		'<p> First Name: ' + data.firstName + '</p>'+
+                    '<p> Last Name: ' + data.lastName + '</p>'+
+                    '<p> Address: ' + data.address + '</p>'+
+                    '<p> City: ' + data.city + '</p>'+
+                    '<p> State: ' + data.state + '</p>'+
+                    '<p> Phone Number: ' + data.phoneNumber + '</p>'+
+                    '<p> Email: ' + data.email + '</p>'+
+                    '<p> Date: ' + data.date + '</p>'+
+                    '<p> TextBox: ' + data.textBox + '</p>'+
+                    '<p> Range: ' + data.range + '</p></li>'
+				
+					).appendTo('#detailItems');
+					console.log(data.mydate);
+        console.log(data);
+        console.log("Item Loaded!");
+        
+       
+      
+        
+    },
+    error: function(status) {
+        console.log(status);
+    }
+});
+	
+var deleteDoc = function(){  
+ 
+    
+
+					if (confirm('Sure you want to delete this event? There is no turning back.'))
+					{
+						alert("You Have Deleted This Event.")
+						var doc = {
+    _id:data._id,
+    _rev:data._rev
+};
+
+
+console.log(data._id);
+$.couch.db("asdproject").removeDoc(doc, {
+     success: function(data) {
+     var idValue = data._id
+	var revValue = data._rev
+         console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+});
+					
+						$.mobile.changePage("#Home");
+					}
+					else	
+					{
+						alert("Event was Not Deleted");
+					}
+			};
+ 
+
 	$('#editItemLink').on("click", function(){
 
   $.couch.db("asdproject").openDoc(details, {
     success: function(data) {
+   
     var idValue = data._id
 	var revValue = data._rev
 		console.log(idValue);
@@ -130,7 +198,7 @@ var details = urlVars()["Events"];
         console.log(data);
         console.log(data.group);
         console.log(data.date);
-        var editDoc = function(idValue,revValue) {
+        var editDoc = function() {
         var item 				= {};
 			$('#select-choice-1').val(data.group);
 			$('#firstName').val(data.firstName);
@@ -154,68 +222,51 @@ var details = urlVars()["Events"];
         $("saveEvent").val("Edit Contact");
 console.log(editSubmit);
         //save the key value established in this function as a property of the edit Submit event
-        editSubmit.on("click", storeData);
+        editSubmit.on("click", function () {
+        	
+        	var doc = {
+        	_id:idValue,
+        	_rev:revValue,
+        	group:$('#select-choice-1').val(),
+        	firstName:$('#firstName').val(),
+        	lastName:$('#lastName').val(),
+        	address:$('#address').val(),
+        	city:$('#city').val(),
+        	state:$('#state').val(),
+        	phoneNumber:$('#phoneNumber').val(),
+        	email:$('#email').val(),
+        	date:$('#date').val(),
+        	textBox:$('#textBox').val(),
+        	range:$('#range').val()
+        	
+        	};
+$.couch.db("asdproject").saveDoc(doc, {
+    success: function(data) {
+        console.log(data);
+    },
+    error: function(status) {
+        console.log(status);
+    }
+});
+        });
         editSubmit.key = this.key;
  
         };
-        editDoc(idValue,revValue)
+       editDoc(idValue,revValue);
     },
     error: function(status) {
         console.log(status);
     }
 });
+
+			
 	});
 	
-	$("#deleteItemLink").on('click', function(){
-				//Remove document by id
-				var idValue = data._id
-				var revValue = data._rev
-				$.couch.db("asdproject").removeDoc(idValue,revValue, {
-					success: function(data){
-						console.log(data);
-						if(ask){
-							alert("Comic was deleted!");
-							window.location.reload();
-						}else{
-							alert("Comic was NOT deleted!");
-						}	
-					},
-					error: function(status){
-						console.log(status);
-					}
-				});
-			});
-        
 
-var details = urlVars()["Events"];
-console.log(details);
-	$.couch.db("asdproject").openDoc(details, {
-    success: function(data) {
-    	
-    		$('' +
-            		'<li><p> Event: ' + data.group + '</p>'+
-            		'<p> First Name: ' + data.firstName + '</p>'+
-                    '<p> Last Name: ' + data.lastName + '</p>'+
-                    '<p> Address: ' + data.address + '</p>'+
-                    '<p> City: ' + data.city + '</p>'+
-                    '<p> State: ' + data.state + '</p>'+
-                    '<p> Phone Number: ' + data.phoneNumber + '</p>'+
-                    '<p> Email: ' + data.email + '</p>'+
-                    '<p> Date: ' + data.date + '</p>'+
-                    '<p> TextBox: ' + data.textBox + '</p>'+
-                    '<p> Range: ' + data.range + '</p></li>'
-				
-					).appendTo('#detailItems');
-        console.log(data);
-        console.log("Item Loaded!");
-        
-       
-      
-        
-    },
-    error: function(status) {
-        console.log(status);
-    }
-});
+
+	$("#deleteItemLink").on("click", function(){
+				deleteDoc(data._id,data._rev)
+				});
 	});
+	
 });
