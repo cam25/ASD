@@ -72,11 +72,11 @@ $("#displayPage").live("pageshow", function() {
 console.log("DisplayPage Loaded");
 	$.couch.db("asdproject").view("app/Events", {
 		success: function(data) {
-			//console.log(data);
+			console.log(data.rows[0]);
 			$("#display").empty();
 			$.each(data.rows, function(index, event) {
-			
 					var key = event.id;
+					var rev = event.value._rev;
 					var group = event.value.group;
 					var firstName = event.value.firstName;
 					var lastName = event.value.lastName;
@@ -89,9 +89,8 @@ console.log("DisplayPage Loaded");
 					var textBox = event.value.textBox;
 					var iq = event.value.range;
 				
-				
-					$("<li>").append($("<a>").attr("href", "details.html?Events=" + key).text(group)).appendTo("#display");
-					
+					var dbky = key + "|" + rev;
+					$("<li>").append($("<a>").attr("href", "details.html?Events=" + key + "&dbkey=" + dbky).text(group)).appendTo("#display");
 			});
 			
 				$("#display").listview("refresh");
@@ -121,7 +120,9 @@ var urlVars = function() {
 	}
 	
 var details = urlVars()["Events"];
+var dbkys = urlVars()["dbkey"].split("|");
 console.log(details);
+console.log(dbkys);
 	$.couch.db("asdproject").openDoc(details, {
     success: function(data) {
     	
@@ -140,7 +141,7 @@ console.log(details);
 				
 					).appendTo('#detailItems');
 					console.log(data.date);
-        console.log(data);
+        
         console.log("Item Loaded!");
         
        
@@ -156,18 +157,18 @@ console.log(details);
 
 $("#deleteItemLink").on("click", function(){
 var deleteDoc = function(){  
- 
+
 					if (confirm('Sure you want to delete this event? There is no turning back.'))
 					{
 						alert("You Have Deleted This Event.")
 						var doc = {
 						
-    				_id:data._id,
-    				_rev:data._rev
+    				_id:dbkys[0],
+    				_rev:dbkys[1]
     				
 };
 
-
+console.log(doc);
 $.couch.db("asdproject").removeDoc(doc, {
      success: function(data) {
      var idValue = data._id

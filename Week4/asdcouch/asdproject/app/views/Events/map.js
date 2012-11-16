@@ -1,6 +1,7 @@
 function(doc) {
   if (doc._id.substr(0, 6) === "Event:") {
     emit(doc._id,{
+    	"_rev": doc._rev,
     	"group": doc.group,
     	"firstName": doc.firstName,
     	"lastName": doc.lastName,
@@ -12,7 +13,7 @@ function(doc) {
     	"timeEVent": doc.timeEVent,
     	"date": doc.date,
     	"textBox": doc.textBox,
-    	"iq": doc.iq,
+    	"range": doc.range,
     	"checkBox": doc.checkBox
     	
     
