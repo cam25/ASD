@@ -139,7 +139,7 @@ console.log(details);
                     '<p> Range: ' + data.range + '</p></li>'
 				
 					).appendTo('#detailItems');
-					console.log(data.mydate);
+					console.log(data.date);
         console.log(data);
         console.log("Item Loaded!");
         
@@ -151,21 +151,23 @@ console.log(details);
         console.log(status);
     }
 });
-	
+
+
+
+$("#deleteItemLink").on("click", function(){
 var deleteDoc = function(){  
  
-    
-
 					if (confirm('Sure you want to delete this event? There is no turning back.'))
 					{
 						alert("You Have Deleted This Event.")
 						var doc = {
-    _id:data._id,
-    _rev:data._rev
+						
+    				_id:data._id,
+    				_rev:data._rev
+    				
 };
 
 
-console.log(data._id);
 $.couch.db("asdproject").removeDoc(doc, {
      success: function(data) {
      var idValue = data._id
@@ -184,6 +186,10 @@ $.couch.db("asdproject").removeDoc(doc, {
 						alert("Event was Not Deleted");
 					}
 			};
+				deleteDoc(data._id,data._rev)
+				});
+	
+
  
 
 	$('#editItemLink').on("click", function(){
@@ -262,11 +268,7 @@ $.couch.db("asdproject").saveDoc(doc, {
 			
 	});
 	
-
-
-	$("#deleteItemLink").on("click", function(){
-				deleteDoc(data._id,data._rev)
-				});
+	
 	});
 	
 });
